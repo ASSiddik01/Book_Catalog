@@ -3,7 +3,11 @@ import { tryCatch } from '../../../utilities/tryCatch'
 import { sendRes } from '../../../utilities/sendRes'
 import httpStatus from 'http-status'
 import { User } from '@prisma/client'
-import { getUserService, getUsersService } from './user.services'
+import {
+  getUserService,
+  getUsersService,
+  updateUserService,
+} from './user.services'
 
 export const getUsers = tryCatch(async (req: Request, res: Response) => {
   const result = await getUsersService()
@@ -24,6 +28,18 @@ export const getUser = tryCatch(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'User retrieved successfully',
+    data: result,
+  })
+})
+
+export const updateUser = tryCatch(async (req: Request, res: Response) => {
+  const { id } = req.params
+  const result = await updateUserService(id, req.body)
+
+  sendRes<Partial<User>>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User updated successfully',
     data: result,
   })
 })

@@ -1,11 +1,11 @@
-
 import { z } from 'zod'
 
-// example zod validation schema
-export const createUserZod = z.object({
+export const updateUserZod = z.object({
   body: z.object({
-    key: z.string({
-      required_error: 'Z: Key name is required',
-    }),
+    name: z.string().optional(),
+    email: z.string().optional(),
+    contactNo: z.string().optional(),
+    address: z.string().optional(),
+    profileImg: z.string().optional(),
   }),
 })
