@@ -5,6 +5,7 @@ import httpStatus from 'http-status'
 import { Book } from '@prisma/client'
 import {
   createBookService,
+  deleteBookService,
   getBookService,
   getBooksService,
   updateBookService,
@@ -52,6 +53,18 @@ export const updateBook = tryCatch(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Book updated successfully',
+    data: result,
+  })
+})
+
+export const deleteBook = tryCatch(async (req: Request, res: Response) => {
+  const { id } = req.params
+  const result = await deleteBookService(id)
+
+  sendRes<Partial<Book>>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Book delete successfully',
     data: result,
   })
 })

@@ -54,3 +54,16 @@ export const updateBookService = async (
   }
   return result
 }
+
+export const deleteBookService = async (id: string): Promise<Partial<Book>> => {
+  const result = await prisma.book.delete({
+    where: {
+      id,
+    },
+  })
+
+  if (!result) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Book delete failed')
+  }
+  return result
+}
