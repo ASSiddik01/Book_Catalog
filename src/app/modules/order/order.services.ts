@@ -1,4 +1,4 @@
-import { Order } from '@prisma/client'
+import { Order, User } from '@prisma/client'
 import prisma from '../../../utilities/prisma'
 import httpStatus from 'http-status'
 import { ApiError } from './../../../errorFormating/apiError'
@@ -23,10 +23,20 @@ export const createOrderService = async (
   }
 }
 
-export const getOrdersService = async (): Promise<Order[] | null> => {
-  const result = await prisma.order.findMany({})
+export const getOrdersService = async (
+  user: Partial<User>
+): Promise<Order[] | null> => {
+  let result
+
+  if (user.role === 'admin') {
+    result = await prisma.order.findMany({})
+  } else {
+    result = await prisma.order.findMany({ where: { userId: user.id } })
+  }
+
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Orders fetched failed')
   }
+
   return result
 }

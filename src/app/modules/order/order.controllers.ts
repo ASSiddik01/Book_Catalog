@@ -3,7 +3,7 @@ import { tryCatch } from '../../../utilities/tryCatch'
 import { sendRes } from '../../../utilities/sendRes'
 import httpStatus from 'http-status'
 import { createOrderService, getOrdersService } from './order.services'
-import { Order } from '@prisma/client'
+import { Order, User } from '@prisma/client'
 
 export const createOrder = tryCatch(async (req: Request, res: Response) => {
   const result = await createOrderService(req.user?.id, req.body)
@@ -16,7 +16,7 @@ export const createOrder = tryCatch(async (req: Request, res: Response) => {
 })
 
 export const getOrders = tryCatch(async (req: Request, res: Response) => {
-  const result = await getOrdersService()
+  const result = await getOrdersService(req.user as Partial<User>)
 
   sendRes<Order[]>(res, {
     statusCode: httpStatus.OK,
