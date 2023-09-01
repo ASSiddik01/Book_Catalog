@@ -3,7 +3,7 @@ import prisma from '../../../utilities/prisma'
 import bcrypt from 'bcrypt'
 import config from '../../../config'
 import httpStatus from 'http-status'
-import { ApiError } from './../../../errorFormating/apiError'
+import { ApiError } from '../../../errorFormating/apiError'
 import { isExist } from './auth.utils'
 
 export const signUpService = async (

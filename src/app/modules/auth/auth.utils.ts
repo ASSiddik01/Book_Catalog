@@ -1,7 +1,6 @@
 import prisma from '../../../utilities/prisma'
 import bcrypt from 'bcrypt'
 import { User } from '@prisma/client'
-import { IExtendedUser } from './auth.interfaces'
 
 export const isExist = async (payload: string): Promise<User | null> => {
   const result = await prisma.user.findFirst({
