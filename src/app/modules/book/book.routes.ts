@@ -3,7 +3,7 @@ import reqValidate from '../../../middleware/reqValidate'
 import { auth } from '../../../middleware/auth'
 import { createBookZod } from './book.validations'
 import { ENUM_USER_ROLE } from '../../../enums/user'
-import { createBook } from './book.controllers'
+import { createBook, getBooks } from './book.controllers'
 
 const router = express.Router()
 
@@ -11,5 +11,7 @@ const router = express.Router()
 router
   .route('/create-book')
   .post(auth(ENUM_USER_ROLE.ADMIN), reqValidate(createBookZod), createBook)
+
+router.route('/').get(getBooks)
 
 export default router
