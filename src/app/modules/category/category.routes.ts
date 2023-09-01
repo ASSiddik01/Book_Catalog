@@ -5,6 +5,7 @@ import { createCategoryZod } from './category.validations'
 import { ENUM_USER_ROLE } from '../../../enums/user'
 import {
   createCategory,
+  deleteCategory,
   getCategories,
   getCategory,
   updateCategory,
@@ -26,5 +27,6 @@ router
   .route('/:id')
   .get(getCategory)
   .patch(auth(ENUM_USER_ROLE.ADMIN), updateCategory)
+  .delete(auth(ENUM_USER_ROLE.ADMIN), deleteCategory)
 
 export default router

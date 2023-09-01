@@ -57,3 +57,18 @@ export const updateCategoryService = async (
   }
   return result
 }
+
+export const deleteCategoryService = async (
+  id: string
+): Promise<Partial<Category>> => {
+  const result = await prisma.category.delete({
+    where: {
+      id,
+    },
+  })
+
+  if (!result) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Category delete failed')
+  }
+  return result
+}

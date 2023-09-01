@@ -4,6 +4,7 @@ import { sendRes } from '../../../utilities/sendRes'
 import httpStatus from 'http-status'
 import {
   createCategoryService,
+  deleteCategoryService,
   getCategoriesService,
   getCategoryService,
   updateCategoryService,
@@ -52,6 +53,18 @@ export const updateCategory = tryCatch(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Category updated successfully',
+    data: result,
+  })
+})
+
+export const deleteCategory = tryCatch(async (req: Request, res: Response) => {
+  const { id } = req.params
+  const result = await deleteCategoryService(id)
+
+  sendRes<Partial<Category>>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Category delete successfully',
     data: result,
   })
 })
