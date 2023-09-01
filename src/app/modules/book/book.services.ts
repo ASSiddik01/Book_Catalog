@@ -1,0 +1,16 @@
+import prisma from '../../../utilities/prisma'
+import httpStatus from 'http-status'
+import { ApiError } from './../../../errorFormating/apiError'
+import { Book } from '@prisma/client'
+
+export const createBookService = async (data: Book): Promise<Book | null> => {
+  const result = await prisma.book.create({
+    data,
+  })
+
+  if (!result) {
+    throw new ApiError(httpStatus.BAD_GATEWAY, `Book created failed`)
+  }
+
+  return result
+}
