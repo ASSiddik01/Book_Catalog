@@ -16,3 +16,11 @@ export const createCategoryService = async (
 
   return result
 }
+
+export const getCategoriesService = async (): Promise<Category[]> => {
+  const result = await prisma.category.findMany({})
+  if (!result) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Categories fetched failed')
+  }
+  return result
+}
