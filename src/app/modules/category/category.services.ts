@@ -17,10 +17,26 @@ export const createCategoryService = async (
   return result
 }
 
-export const getCategoriesService = async (): Promise<Category[]> => {
+export const getCategoriesService = async (): Promise<Category[] | null> => {
   const result = await prisma.category.findMany({})
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Categories fetched failed')
   }
+  return result
+}
+
+export const getCategoryService = async (
+  id: string
+): Promise<Category | null> => {
+  const result = await prisma.category.findUnique({
+    where: {
+      id,
+    },
+  })
+
+  if (!result) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Category fetched failed')
+  }
+
   return result
 }

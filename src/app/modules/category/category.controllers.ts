@@ -5,6 +5,7 @@ import httpStatus from 'http-status'
 import {
   createCategoryService,
   getCategoriesService,
+  getCategoryService,
 } from './category.services'
 import { Category } from '@prisma/client'
 
@@ -26,6 +27,18 @@ export const getCategories = tryCatch(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Categories fetched  successfully',
+    data: result,
+  })
+})
+
+export const getCategory = tryCatch(async (req: Request, res: Response) => {
+  const { id } = req.params
+  const result = await getCategoryService(id)
+
+  sendRes<Category>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Category fetched successfully',
     data: result,
   })
 })
