@@ -7,19 +7,22 @@ import httpStatus from 'http-status'
 import { ApiError } from '../../../errorFormating/apiError'
 import { returnUser } from '../auth/auth.constants'
 
-export const getUsersService = async (): Promise<User[]> => {
-  const result = await prisma.user.findMany({})
+export const getUsersService = async (): Promise<
+  Partial<Omit<User, 'password'>[]>
+> => {
+  const result = await prisma.user.findMany({ select: returnUser })
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Users retrieved failed')
   }
   return result
 }
 
-export const getUserService = async (id: string): Promise<User> => {
+export const getUserService = async (id: string): Promise<Partial<User>> => {
   const result = await prisma.user.findUnique({
     where: {
       id,
     },
+    select: returnUser,
   })
 
   if (!result) {
@@ -57,7 +60,7 @@ export const deleteUserService = async (id: string): Promise<Partial<User>> => {
   })
 
   if (!result) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'User delete failed')
+    throw new ApiError(httpStatus.BAD_REQUEST, 'User deleted failed')
   }
   return result
 }

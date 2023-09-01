@@ -57,7 +57,7 @@ export const signInService = async (
 
   // Create Access Token
   const { id, role, name, email } = user
-  const accessToken = createToken(
+  const token = createToken(
     { id, role, name, email },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string
@@ -71,7 +71,7 @@ export const signInService = async (
   )
 
   return {
-    accessToken,
+    token,
     refreshToken,
   }
 }

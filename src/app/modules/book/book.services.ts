@@ -2,11 +2,12 @@ import prisma from '../../../utilities/prisma'
 import httpStatus from 'http-status'
 import { ApiError } from './../../../errorFormating/apiError'
 import { Book } from '@prisma/client'
+import { categoryPolulate } from './book.constants'
 
 export const createBookService = async (data: Book): Promise<Book | null> => {
   const result = await prisma.book.create({
     data,
-    include: { category: true },
+    include: categoryPolulate,
   })
 
   if (!result) {

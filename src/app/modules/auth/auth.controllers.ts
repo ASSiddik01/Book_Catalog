@@ -32,7 +32,7 @@ export const signIn = tryCatch(async (req: Request, res: Response) => {
     sendRes<IAuthSigninResponse>(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: 'Sign in successfully',
+      message: 'User signin successfully!',
       data: others,
     })
   } else {

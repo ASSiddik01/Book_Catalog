@@ -6,7 +6,7 @@ export type IAuthSignin = {
 }
 
 export type IAuthSigninResponse = {
-  accessToken: string
+  token: string
   refreshToken?: string
 }
 

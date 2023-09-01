@@ -13,7 +13,7 @@ import {
 export const getUsers = tryCatch(async (req: Request, res: Response) => {
   const result = await getUsersService()
 
-  sendRes<User[]>(res, {
+  sendRes<Partial<Omit<User, 'password'>[]>>(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Users retrieved successfully',
@@ -25,7 +25,7 @@ export const getUser = tryCatch(async (req: Request, res: Response) => {
   const { id } = req.params
   const result = await getUserService(id)
 
-  sendRes<User>(res, {
+  sendRes<Partial<User>>(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'User retrieved successfully',
@@ -52,7 +52,7 @@ export const deleteUser = tryCatch(async (req: Request, res: Response) => {
   sendRes<Partial<User>>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'User delete successfully',
+    message: 'User deleted successfully',
     data: result,
   })
 })

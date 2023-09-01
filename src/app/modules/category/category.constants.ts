@@ -1,2 +1,3 @@
-
-export const category = ['']
+export const booksPopulate = {
+  books: true,
+}

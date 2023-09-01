@@ -2,6 +2,7 @@ import { Category } from '@prisma/client'
 import prisma from '../../../utilities/prisma'
 import httpStatus from 'http-status'
 import { ApiError } from './../../../errorFormating/apiError'
+import { booksPopulate } from './category.constants'
 
 export const createCategoryService = async (
   data: Category
@@ -18,7 +19,9 @@ export const createCategoryService = async (
 }
 
 export const getCategoriesService = async (): Promise<Category[] | null> => {
-  const result = await prisma.category.findMany({})
+  const result = await prisma.category.findMany({
+    include: booksPopulate,
+  })
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Categories fetched failed')
   }
@@ -32,6 +35,7 @@ export const getCategoryService = async (
     where: {
       id,
     },
+    include: booksPopulate,
   })
 
   if (!result) {

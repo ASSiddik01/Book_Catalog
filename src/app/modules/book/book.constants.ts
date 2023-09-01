@@ -1,2 +1,1 @@
-
-export const book = ['']
+export const categoryPolulate = { category: true }
