@@ -1,10 +1,9 @@
 export const name = ['']
 
-export const ReturnUser = {
+export const returnUser = {
   id: true,
   name: true,
   email: true,
-  password: false,
   role: true,
   contactNo: true,
   address: true,

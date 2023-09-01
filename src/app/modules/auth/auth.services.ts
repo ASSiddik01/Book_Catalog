@@ -5,6 +5,10 @@ import config from '../../../config'
 import httpStatus from 'http-status'
 import { ApiError } from '../../../errorFormating/apiError'
 import { isExist } from './auth.utils'
+import { IAuthSignin, IAuthSigninResponse } from './auth.interfaces'
+import { createToken } from '../../../helpers/jwtHelpers'
+import { Secret } from 'jsonwebtoken'
+import { returnUser } from './auth.constants'
 
 export const signUpService = async (
   data: User
@@ -26,15 +30,7 @@ export const signUpService = async (
 
   const result = await prisma.user.create({
     data,
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      role: true,
-      contactNo: true,
-      address: true,
-      profileImg: true,
-    },
+    select: returnUser,
   })
 
   if (!result) {
@@ -42,4 +38,40 @@ export const signUpService = async (
   }
 
   return result
+}
+
+export const signInService = async (
+  data: IAuthSignin
+): Promise<IAuthSigninResponse | null> => {
+  // existency check
+  const user = await isExist(data.email)
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found')
+  }
+
+  // Password check
+  const passwordMatch = await bcrypt.compare(data.password, user.password)
+  if (!passwordMatch) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Password is incorrect')
+  }
+
+  // Create Access Token
+  const { id, role, name, email } = user
+  const accessToken = createToken(
+    { id, role, name, email },
+    config.jwt.secret as Secret,
+    config.jwt.expires_in as string
+  )
+
+  // Create Refresh Token
+  const refreshToken = createToken(
+    { id, role, name, email },
+    config.jwt.refresh_secret as Secret,
+    config.jwt.refresh_expires_in as string
+  )
+
+  return {
+    accessToken,
+    refreshToken,
+  }
 }

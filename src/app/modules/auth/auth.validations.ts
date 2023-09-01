@@ -25,3 +25,14 @@ export const signUpZod = z.object({
     }),
   }),
 })
+
+export const signInZod = z.object({
+  body: z.object({
+    email: z.string({
+      required_error: 'Z: Email is required',
+    }),
+    password: z.string({
+      required_error: 'Z: Password is required',
+    }),
+  }),
+})

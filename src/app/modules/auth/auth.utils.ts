@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt'
 import { User } from '@prisma/client'
 
 export const isExist = async (payload: string): Promise<User | null> => {
-  const result = await prisma.user.findFirst({
+  const result = await prisma.user.findUnique({
     where: {
       email: payload,
     },
