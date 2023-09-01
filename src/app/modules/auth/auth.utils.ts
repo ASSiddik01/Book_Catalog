@@ -3,16 +3,14 @@ import bcrypt from 'bcrypt'
 import { User } from '@prisma/client'
 import { IExtendedUser } from './auth.interfaces'
 
-export const isExist = async (
-  payload: string
-): Promise<IExtendedUser | null> => {
+export const isExist = async (payload: string): Promise<User | null> => {
   const result = await prisma.user.findFirst({
     where: {
-      OR: [{ email: payload }, { phone: payload }],
+      email: payload,
     },
   })
 
-  return result as IExtendedUser
+  return result
 }
 
 export const isPasswordMatched = async (

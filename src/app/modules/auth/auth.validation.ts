@@ -8,57 +8,20 @@ export const signUpZod = z.object({
     email: z.string({
       required_error: 'Z: Email is required',
     }),
-    phone: z.string({
-      required_error: 'Z: Phone number is required',
-    }),
     password: z.string({
       required_error: 'Z: Password is required',
     }),
-  }),
-})
-
-export const signInZod = z.object({
-  body: z.object({
-    email: z.string({
-      required_error: 'Z: Email is required',
+    role: z.string({
+      required_error: 'Z: Role is required',
     }),
-    password: z.string({
-      required_error: 'Z: Password is required',
+    contactNo: z.string({
+      required_error: 'Z: Contact number is required',
     }),
-  }),
-})
-
-export const refreshTokenZod = z.object({
-  cookies: z.object({
-    refreshToken: z.string({
-      required_error: 'Z: Refresh Token is required',
+    address: z.string({
+      required_error: 'Z: Address is required',
     }),
-  }),
-})
-
-export const changePasswordZod = z.object({
-  body: z.object({
-    oldPassword: z.string({
-      required_error: 'Z: Old password is required',
-    }),
-    newPassword: z.string({
-      required_error: 'Z: New password is required',
-    }),
-  }),
-})
-
-export const forgetPasswordZod = z.object({
-  body: z.object({
-    email: z.string({
-      required_error: 'Z: Email is required',
-    }),
-  }),
-})
-
-export const resetPasswordZod = z.object({
-  body: z.object({
-    password: z.string({
-      required_error: 'Z: Password is required',
+    profileImg: z.string({
+      required_error: 'Z: Profile image link is required',
     }),
   }),
 })
