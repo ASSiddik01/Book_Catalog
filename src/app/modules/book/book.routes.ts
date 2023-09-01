@@ -3,7 +3,7 @@ import reqValidate from '../../../middleware/reqValidate'
 import { auth } from '../../../middleware/auth'
 import { createBookZod } from './book.validations'
 import { ENUM_USER_ROLE } from '../../../enums/user'
-import { createBook, getBook, getBooks } from './book.controllers'
+import { createBook, getBook, getBooks, updateBook } from './book.controllers'
 
 const router = express.Router()
 
@@ -14,6 +14,6 @@ router
 
 router.route('/').get(getBooks)
 
-router.route('/:id').get(getBook)
+router.route('/:id').get(getBook).patch(auth(ENUM_USER_ROLE.ADMIN), updateBook)
 
 export default router

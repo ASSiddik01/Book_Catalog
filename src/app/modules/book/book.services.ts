@@ -37,3 +37,20 @@ export const getBookService = async (id: string): Promise<Book | null> => {
 
   return result
 }
+
+export const updateBookService = async (
+  id: string,
+  payload: Partial<Book>
+): Promise<Partial<Book>> => {
+  const result = await prisma.book.update({
+    where: {
+      id,
+    },
+    data: payload,
+  })
+
+  if (!result) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Book update failed')
+  }
+  return result
+}
