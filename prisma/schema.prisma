@@ -70,17 +70,41 @@ model ReviewAndRating {
   @@map("review_and_ratings")
 }
 
-model Order {
-  id           String   @id @default(uuid())
-  orderedBooks Json[]
-  status       Status   @default(pending)
-  createdAt    DateTime @default(now())
+// model Order {
+//   id           String   @id @default(uuid())
+//   orderedBooks Json[]
+//   status       Status   @default(pending)
+//   createdAt    DateTime @default(now())
 
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
+//   userId String
+//   user   User   @relation(fields: [userId], references: [id])
+
+//   @@map("orders")
+// }
+
+model Order {
+  id           String   @id @default(uuid()) // Use UUID as the ID type
+  userId       String // UUID representing the user who placed the order
+  orderedBooks Json // JSON field for storing an array of book objects
+  status       Status   @default(pending) // Default to 'pending'
+  createdAt    DateTime @default(now()) // Timestamp for order creation
+
+  // Define a foreign key relationship with the User model
+  user User @relation(fields: [userId], references: [id])
 
   @@map("orders")
 }
+
+// model OrderBook {
+//   id        String   @id @default(uuid())
+//   quantity  Int
+
+//   bookId    String
+//   book      Book     @relation(fields: [bookId], references: [id])
+
+//   orderId   Int
+//   order     Order    @relation(fields: [orderId], references: [id])
+// }
 
 enum Status {
   pending

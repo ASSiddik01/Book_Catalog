@@ -4,6 +4,7 @@ import authRoute from '../modules/auth/auth.routes'
 import userRoute from '../modules/user/user.routes'
 import categoryRoute from '../modules/category/category.routes'
 import bookRoute from '../modules/book/book.routes'
+import orderRoute from '../modules/order/order.routes'
 
 const appRoutes = [
   {
@@ -21,6 +22,10 @@ const appRoutes = [
   {
     path: '/books',
     route: bookRoute,
+  },
+  {
+    path: '/orders',
+    route: orderRoute,
   },
 ]
 
