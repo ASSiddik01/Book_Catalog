@@ -9,7 +9,7 @@ const appRoutes = [
     route: authRoute,
   },
   {
-    path: '/user',
+    path: '/users',
     route: userRoute,
   },
 ]
