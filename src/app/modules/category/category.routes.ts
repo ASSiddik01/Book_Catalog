@@ -7,6 +7,7 @@ import {
   createCategory,
   getCategories,
   getCategory,
+  updateCategory,
 } from './category.controllers'
 
 const router = express.Router()
@@ -21,6 +22,9 @@ router
 
 router.route('/').get(getCategories)
 
-router.route('/:id').get(getCategory)
+router
+  .route('/:id')
+  .get(getCategory)
+  .patch(auth(ENUM_USER_ROLE.ADMIN), updateCategory)
 
 export default router

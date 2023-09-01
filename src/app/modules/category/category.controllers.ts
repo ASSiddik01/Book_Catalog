@@ -6,6 +6,7 @@ import {
   createCategoryService,
   getCategoriesService,
   getCategoryService,
+  updateCategoryService,
 } from './category.services'
 import { Category } from '@prisma/client'
 
@@ -39,6 +40,18 @@ export const getCategory = tryCatch(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Category fetched successfully',
+    data: result,
+  })
+})
+
+export const updateCategory = tryCatch(async (req: Request, res: Response) => {
+  const { id } = req.params
+  const result = await updateCategoryService(id, req.body)
+
+  sendRes<Partial<Category>>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Category updated successfully',
     data: result,
   })
 })

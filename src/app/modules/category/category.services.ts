@@ -40,3 +40,20 @@ export const getCategoryService = async (
 
   return result
 }
+
+export const updateCategoryService = async (
+  id: string,
+  payload: Partial<Category>
+): Promise<Partial<Category>> => {
+  const result = await prisma.category.update({
+    where: {
+      id,
+    },
+    data: payload,
+  })
+
+  if (!result) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Category update failed')
+  }
+  return result
+}
