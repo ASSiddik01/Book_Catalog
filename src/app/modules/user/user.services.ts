@@ -47,3 +47,17 @@ export const updateUserService = async (
   }
   return result
 }
+
+export const deleteUserService = async (id: string): Promise<Partial<User>> => {
+  const result = await prisma.user.delete({
+    where: {
+      id,
+    },
+    select: returnUser,
+  })
+
+  if (!result) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'User delete failed')
+  }
+  return result
+}

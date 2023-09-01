@@ -4,6 +4,7 @@ import { sendRes } from '../../../utilities/sendRes'
 import httpStatus from 'http-status'
 import { User } from '@prisma/client'
 import {
+  deleteUserService,
   getUserService,
   getUsersService,
   updateUserService,
@@ -40,6 +41,18 @@ export const updateUser = tryCatch(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'User updated successfully',
+    data: result,
+  })
+})
+
+export const deleteUser = tryCatch(async (req: Request, res: Response) => {
+  const { id } = req.params
+  const result = await deleteUserService(id)
+
+  sendRes<Partial<User>>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User delete successfully',
     data: result,
   })
 })

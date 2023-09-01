@@ -1,6 +1,6 @@
 import express from 'express'
 import { auth } from '../../../middleware/auth'
-import { getUser, getUsers, updateUser } from './user.controllers'
+import { deleteUser, getUser, getUsers, updateUser } from './user.controllers'
 import { ENUM_USER_ROLE } from '../../../enums/user'
 import reqValidate from '../../../middleware/reqValidate'
 import { updateUserZod } from './user.validations'
@@ -14,5 +14,6 @@ router
   .route('/:id')
   .get(auth(ENUM_USER_ROLE.ADMIN), getUser)
   .patch(auth(ENUM_USER_ROLE.ADMIN), reqValidate(updateUserZod), updateUser)
+  .delete(auth(ENUM_USER_ROLE.ADMIN), deleteUser)
 
 export default router
