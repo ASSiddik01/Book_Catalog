@@ -23,3 +23,17 @@ export const getBooksService = async (): Promise<Book[] | null> => {
   }
   return result
 }
+
+export const getBookService = async (id: string): Promise<Book | null> => {
+  const result = await prisma.book.findUnique({
+    where: {
+      id,
+    },
+  })
+
+  if (!result) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Book fetched failed')
+  }
+
+  return result
+}

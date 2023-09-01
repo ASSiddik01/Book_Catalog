@@ -3,7 +3,11 @@ import { tryCatch } from '../../../utilities/tryCatch'
 import { sendRes } from '../../../utilities/sendRes'
 import httpStatus from 'http-status'
 import { Book } from '@prisma/client'
-import { createBookService, getBooksService } from './book.services'
+import {
+  createBookService,
+  getBookService,
+  getBooksService,
+} from './book.services'
 
 // example controller
 export const createBook = tryCatch(async (req: Request, res: Response) => {
@@ -23,6 +27,18 @@ export const getBooks = tryCatch(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Book fetched  successfully',
+    data: result,
+  })
+})
+
+export const getBook = tryCatch(async (req: Request, res: Response) => {
+  const { id } = req.params
+  const result = await getBookService(id)
+
+  sendRes<Book>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Book fetched successfully',
     data: result,
   })
 })
