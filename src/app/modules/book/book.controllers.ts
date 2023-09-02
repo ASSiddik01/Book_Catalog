@@ -10,8 +10,10 @@ import {
   getBooksService,
   updateBookService,
 } from './book.services'
+import { pick } from '../../../utilities/pick'
+import { paginationFields } from '../../../constants/pagination'
+import { bookFilterableFields } from './book.constants'
 
-// example controller
 export const createBook = tryCatch(async (req: Request, res: Response) => {
   const result = await createBookService(req.body)
   sendRes<Book>(res, {
@@ -23,13 +25,23 @@ export const createBook = tryCatch(async (req: Request, res: Response) => {
 })
 
 export const getBooks = tryCatch(async (req: Request, res: Response) => {
-  const result = await getBooksService()
+  const paginationOptions = pick(req.query, paginationFields)
+  const filters = pick(req.query, bookFilterableFields)
 
+  const result = await getBooksService(paginationOptions, filters)
+
+  // sendRes<Book[]>(res, {
+  //   statusCode: httpStatus.OK,
+  //   success: true,
+  //   message: 'Book fetched  successfully',
+  //   data: result,
+  // })
   sendRes<Book[]>(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Book fetched  successfully',
-    data: result,
+    meta: result.meta,
+    data: result.data,
   })
 })
 

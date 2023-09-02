@@ -1,8 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import prisma from '../../../utilities/prisma'
 import httpStatus from 'http-status'
 import { ApiError } from './../../../errorFormating/apiError'
-import { Book } from '@prisma/client'
-import { categoryPolulate } from './book.constants'
+import { Book, Prisma } from '@prisma/client'
+import { bookSearchableFields, categoryPolulate } from './book.constants'
+import { IPaginationOptions } from '../../../interface/pagination'
+import { IBookFilters } from './book.interfaces'
+import { calculatePagination } from '../../../helpers/paginationHelper'
 
 export const createBookService = async (data: Book): Promise<Book | null> => {
   const result = await prisma.book.create({
@@ -17,12 +21,90 @@ export const createBookService = async (data: Book): Promise<Book | null> => {
   return result
 }
 
-export const getBooksService = async (): Promise<Book[] | null> => {
-  const result = await prisma.book.findMany({ include: { category: true } })
+export const getBooksService = async (
+  paginationOptions: IPaginationOptions,
+  filters: IBookFilters
+): Promise<Book[] | null | any> => {
+  const { page, size, skip, sortBy, sortOrder } =
+    calculatePagination(paginationOptions)
+  const { search, minPrice, maxPrice, ...filtersData } = filters
+
+  const andConditons = []
+
+  // Search on fields
+  if (search) {
+    andConditons.push({
+      OR: bookSearchableFields.map(field => ({
+        [field]: {
+          contains: search,
+          mode: 'insensitive',
+        },
+      })),
+    })
+  }
+
+  // Other filtering
+  if (Object.keys(filtersData).length > 0) {
+    andConditons.push({
+      AND: Object.keys(filtersData).map(key => ({
+        ['categoryId']: {
+          equals: (filtersData as any)[key],
+        },
+      })),
+    })
+  }
+
+  // Filter on price
+  if (minPrice && maxPrice) {
+    andConditons.push({
+      price: {
+        gte: Number(minPrice),
+        lte: Number(maxPrice),
+      },
+    })
+  } else if (minPrice) {
+    andConditons.push({
+      price: {
+        gte: Number(minPrice),
+      },
+    })
+  } else if (maxPrice) {
+    andConditons.push({
+      price: {
+        lte: Number(maxPrice),
+      },
+    })
+  }
+
+  const whereConditons: Prisma.BookWhereInput =
+    andConditons.length > 0 ? { AND: andConditons } : {}
+
+  const result = await prisma.book.findMany({
+    where: whereConditons,
+    skip,
+    take: size,
+    orderBy: {
+      [sortBy]: sortOrder,
+    },
+    include: { category: true },
+  })
+
+  const total = await prisma.book.count()
+  const totalPage = Math.ceil(total / size)
+
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Book fetched failed')
   }
-  return result
+
+  return {
+    meta: {
+      page,
+      size,
+      total,
+      totalPage,
+    },
+    data: result,
+  }
 }
 
 export const getBookService = async (id: string): Promise<Book | null> => {
