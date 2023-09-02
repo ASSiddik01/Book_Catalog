@@ -1,5 +1,3 @@
-export const name = ['']
-
 export const returnUser = {
   id: true,
   name: true,
