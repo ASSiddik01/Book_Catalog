@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Mr. Admin",
+    "email": "admin@gmail.com",
+    "password": "admin",
+    "role": "admin",
+    "contactNo": "1234567890",
+    "address": "Dhaka, Bangladesh",
+    "profileImg": "user.jpg"
+  },
+  {
+    "name": "Alice Johnson",
+    "email": "alice@gmail.com",
+    "password": "password123",
+    "role": "customer",
+    "contactNo": "9876543210",
+    "address": "New York, USA",
+    "profileImg": "alice.jpg"
+  },
+  {
+    "name": "Bob Smith",
+    "email": "bob@gmail.com",
+    "password": "bob123",
+    "role": "customer",
+    "contactNo": "555-123-4567",
+    "address": "Los Angeles, USA",
+    "profileImg": "bob.jpg"
+  },
+  {
+    "name": "Eva Martinez",
+    "email": "eva@gmail.com",
+    "password": "eva2023",
+    "role": "customer",
+    "contactNo": "123-789-4560",
+    "address": "Madrid, Spain",
+    "profileImg": "eva.jpg"
+  },
+  {
+    "name": "John Doe",
+    "email": "john@gmail.com",
+    "password": "doe567",
+    "role": "customer",
+    "contactNo": "555-987-6543",
+    "address": "London, UK",
+    "profileImg": "john.jpg"
+  },
+  {
+    "name": "Linda Miller",
+    "email": "linda@gmail.com",
+    "password": "linda@2023",
+    "role": "customer",
+    "contactNo": "123-456-7890",
+    "address": "Sydney, Australia",
+    "profileImg": "linda.jpg"
+  }
+]

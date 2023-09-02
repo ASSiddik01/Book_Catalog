@@ -1,0 +1,26 @@
+[
+  {
+    "title": "The Catcher in the Rye",
+    "author": "J.D. Salinger",
+    "genre": "Fiction",
+    "price": 350.75,
+    "publicationDate": "1951-07-16",
+    "categoryId": "8defa938-f279-478f-b3c6-693910d13640"
+  },
+  {
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "genre": "Fiction",
+    "price": 299.99,
+    "publicationDate": "1960-07-11",
+    "categoryId": "8defa938-f279-478f-b3c6-693910d13640"
+  },
+  {
+    "title": "Harry Potter and the Sorcerer's Stone",
+    "author": "J.K. Rowling",
+    "genre": "Fantasy",
+    "price": 399.0,
+    "publicationDate": "1997-06-26",
+    "categoryId": "b72b3bb7-b255-4c96-adb4-3034bfdb6ec6"
+  }
+]
