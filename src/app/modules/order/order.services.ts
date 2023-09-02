@@ -47,14 +47,14 @@ export const getOrderService = async (
 ): Promise<Order | null> => {
   let result
 
-  if (user.role === 'admin') {
+  if (user.role === 'customer') {
+    result = await prisma.order.findUnique({ where: { id, userId: user.id } })
+  } else {
     result = await prisma.order.findUnique({
       where: {
         id,
       },
     })
-  } else {
-    result = await prisma.order.findUnique({ where: { id, userId: user.id } })
   }
 
   if (!result) {
