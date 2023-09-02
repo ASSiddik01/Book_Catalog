@@ -35,7 +35,30 @@ export const getOrdersService = async (
   }
 
   if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Orders fetched failed')
+    throw new ApiError(httpStatus.NOT_FOUND, 'Orders not found')
+  }
+
+  return result
+}
+
+export const getOrderService = async (
+  user: Partial<User>,
+  id: string
+): Promise<Order | null> => {
+  let result
+
+  if (user.role === 'admin') {
+    result = await prisma.order.findUnique({
+      where: {
+        id,
+      },
+    })
+  } else {
+    result = await prisma.order.findUnique({ where: { id, userId: user.id } })
+  }
+
+  if (!result) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Orders not found')
   }
 
   return result
