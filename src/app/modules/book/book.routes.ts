@@ -7,6 +7,7 @@ import {
   createBook,
   deleteBook,
   getBook,
+  getBookByCategoryId,
   getBooks,
   updateBook,
 } from './book.controllers'
@@ -19,6 +20,8 @@ router
   .post(auth(ENUM_USER_ROLE.ADMIN), reqValidate(createBookZod), createBook)
 
 router.route('/').get(getBooks)
+
+router.route('/:categoryId/category').get(getBookByCategoryId)
 
 router
   .route('/:id')

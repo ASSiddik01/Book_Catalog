@@ -6,6 +6,7 @@ import { Book } from '@prisma/client'
 import {
   createBookService,
   deleteBookService,
+  getBookByCategoryIdService,
   getBookService,
   getBooksService,
   updateBookService,
@@ -30,16 +31,10 @@ export const getBooks = tryCatch(async (req: Request, res: Response) => {
 
   const result = await getBooksService(paginationOptions, filters)
 
-  // sendRes<Book[]>(res, {
-  //   statusCode: httpStatus.OK,
-  //   success: true,
-  //   message: 'Book fetched  successfully',
-  //   data: result,
-  // })
   sendRes<Book[]>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Book fetched  successfully',
+    message: 'Books fetched  successfully',
     meta: result.meta,
     data: result.data,
   })
@@ -56,6 +51,28 @@ export const getBook = tryCatch(async (req: Request, res: Response) => {
     data: result,
   })
 })
+
+export const getBookByCategoryId = tryCatch(
+  async (req: Request, res: Response) => {
+    const { categoryId } = req.params
+    const paginationOptions = pick(req.query, paginationFields)
+    const filters = pick(req.query, bookFilterableFields)
+
+    const result = await getBookByCategoryIdService(
+      categoryId,
+      paginationOptions,
+      filters
+    )
+
+    sendRes<Book[]>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Book fetched  successfully',
+      meta: result.meta,
+      data: result.data,
+    })
+  }
+)
 
 export const updateBook = tryCatch(async (req: Request, res: Response) => {
   const { id } = req.params
