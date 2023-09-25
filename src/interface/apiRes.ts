@@ -8,4 +8,5 @@ export type IApiRes<T> = {
     total: number
   }
   data?: T | null
+  token?: string | null | undefined
 }

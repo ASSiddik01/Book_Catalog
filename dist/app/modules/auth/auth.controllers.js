@@ -40,29 +40,19 @@ exports.signUp = (0, tryCatch_1.tryCatch)((req, res) => __awaiter(void 0, void 0
 }));
 exports.signIn = (0, tryCatch_1.tryCatch)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield (0, auth_services_1.signInService)(req.body);
-    if (result !== null) {
-        const { refreshToken } = result, others = __rest(result
-        // Set Refresh Token in Cookies
-        , ["refreshToken"]);
-        // Set Refresh Token in Cookies
-        const cookieOptions = {
-            secure: config_1.default.env === 'production',
-            httpOnly: true,
-        };
-        res.cookie('refreshToken', refreshToken, cookieOptions);
-        (0, sendRes_1.sendRes)(res, {
-            statusCode: http_status_1.default.OK,
-            success: true,
-            message: 'User signin successfully!',
-            data: others,
-        });
-    }
-    else {
-        (0, sendRes_1.sendRes)(res, {
-            statusCode: http_status_1.default.UNAUTHORIZED,
-            success: true,
-            message: 'Sign in failed',
-            data: result,
-        });
-    }
+    const { refreshToken } = result, others = __rest(result
+    // Set Refresh Token in Cookies
+    , ["refreshToken"]);
+    // Set Refresh Token in Cookies
+    const cookieOptions = {
+        secure: config_1.default.env === 'production',
+        httpOnly: true,
+    };
+    res.cookie('refreshToken', refreshToken, cookieOptions);
+    (0, sendRes_1.sendRes)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'User signin successfully!',
+        token: others.token,
+    });
 }));

@@ -42,7 +42,7 @@ export const signUpService = async (
 
 export const signInService = async (
   data: IAuthSignin
-): Promise<IAuthSigninResponse | null> => {
+): Promise<IAuthSigninResponse> => {
   // existency check
   const user = await isExist(data.email)
   if (!user) {

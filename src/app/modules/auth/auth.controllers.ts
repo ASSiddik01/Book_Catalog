@@ -20,27 +20,18 @@ export const signUp = tryCatch(async (req: Request, res: Response) => {
 export const signIn = tryCatch(async (req: Request, res: Response) => {
   const result = await signInService(req.body)
 
-  if (result !== null) {
-    const { refreshToken, ...others } = result
-    // Set Refresh Token in Cookies
-    const cookieOptions = {
-      secure: config.env === 'production',
-      httpOnly: true,
-    }
-    res.cookie('refreshToken', refreshToken, cookieOptions)
-
-    sendRes<IAuthSigninResponse>(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: 'User signin successfully!',
-      data: others,
-    })
-  } else {
-    sendRes<IAuthSigninResponse>(res, {
-      statusCode: httpStatus.UNAUTHORIZED,
-      success: true,
-      message: 'Sign in failed',
-      data: result,
-    })
+  const { refreshToken, ...others } = result
+  // Set Refresh Token in Cookies
+  const cookieOptions = {
+    secure: config.env === 'production',
+    httpOnly: true,
   }
+  res.cookie('refreshToken', refreshToken, cookieOptions)
+
+  sendRes<IAuthSigninResponse>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User signin successfully!',
+    token: others.token,
+  })
 })
