@@ -2,7 +2,7 @@
 
 ### Application Routes:
 
-#### User
+### User
 
 - api/v1/auth/signup (POST)
 - api/v1/auth/signin (POST)
@@ -34,8 +34,12 @@
 - api/v1/orders/create-order (POST)
 - api/v1/orders (GET)
 
+## **_Bonus Part_**
 
-## ***Bonus Part***
+### Orders
 
 - api/v1/orders/6c88bb9d-90ab-4ed8-a360-f58e0a4ca00d (GET)
+
+### Profile
+
 - api/v1/profile (GET)
